@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, shrink-to-fit=no, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Simple Sidebar - Start Bootstrap Template</title>
+
+<!-- Bootstrap Core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="css/simple-sidebar.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+	<div id="wrapper">
+
+		<!-- Sidebar -->
+		<!-- <div id="sidebar-wrapper">
+			<ul class="sidebar-nav">
+				<li class="sidebar-brand"><a href="#"> Stock </a></li>
+				<li><a href="#">Entries</a></li>
+				<li><a href="#">Outputs</a></li>
+			</ul>
+		</div> -->
+		<!-- /#sidebar-wrapper -->
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper">
+			<div class="container-fluid">
+				<!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle
+					Menu</a> -->
+				<div class="row">
+					<div class="col-lg-6 col-md-6">
+						<h1>Transfucsactions</h1>
+						<form id="transactionForm">
+							<div class="form-group">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									Product: <select id="products">
+										<option value="1">prod 1</option>
+										<option value="2">prod 2</option>
+										<option value="3">prod 3</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									Manufacturer: <input type="text" id="manufacturer" />
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									Quantity: <input type="text" id="quantity" />
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									Type: <select id="type">
+										<option selected value="0">Entry</option>
+										<option value="1">Output</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									Expected Date: <input type="date" id="expectedDate" />
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									Delivery Date: <input type="date" id="deliveryDate" />
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									Output Date: <input type="date" id="outputDate" disabled />
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
+									<button type="cancel" class="btn btn-danger buttom">Limpar</button>
+									<button type="submit" class="btn btn-success buttom" id="send">Entrar</button>
+								</div>
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /#page-content-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+
+	<!-- jQuery -->
+	<script src="js/jquery.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="js/bootstrap.min.js"></script>
+
+	<!-- Menu Toggle Script -->
+	<script>
+		$("#menu-toggle").click(function(e) {
+			e.preventDefault();
+			$("#wrapper").toggleClass("toggled");
+		});
+
+		$("#type").on("change", function() {
+			if (this.value == 0) {
+				$("#outputDate").attr("disabled", "disabled");
+				$("#deliveryDate").removeAttr("disabled");
+				$("#expectedDate").removeAttr("disabled");
+			} else {
+				$("#outputDate").removeAttr("disabled");
+				$("#deliveryDate").attr("disabled", "disabled");
+				$("#expectedDate").attr("disabled", "disabled");
+			}
+		})
+	</script>
+
+</body>
+
+</html>
