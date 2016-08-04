@@ -1,4 +1,4 @@
-$("#send").on("click", function() {
+var add = function() {
 	var transaction = {};
 
 	transaction.productId = $("#products").val();
@@ -16,15 +16,16 @@ $("#send").on("click", function() {
 		url : "../rest/transaction/add",
 		data : transaction,
 		success : function(r) {
-			alert("MAOHEEE" + r);
+			alert(r);
 			update();
 		},
 		error : function(err) {
+			alert("wtf");
 			update();
 		}
 	};
 	CFINAC.ajax.post(cfg);
-});
+};
 
 function getTransactions(isEntry) {
 	cfg = {
@@ -46,9 +47,9 @@ function showTransactions(list, type) {
 	html += "<table class='table table-striped'>"
 	html += "<tr>";
 	html += "<th>Product Name</th>";
-	html += "<th>Manufacturer</th>";
 	html += "<th>Quantity</th>";
 	if (type == 0) {
+		html += "<th>Manufacturer</th>";
 		html += "<th>Expected Date</th>";
 		html += "<th>Delivery Date</th>";
 	} else {
@@ -63,9 +64,9 @@ function showTransactions(list, type) {
 		for (i = 0; i < list.length; i++) {
 			html += "<tr>";
 			html += "<td>" + list[i].productName + "</td>";
-			html += "<td>" + list[i].manufacturer + "</td>";
 			html += "<td>" + list[i].quantity + "</td>";
 			if (type == 0) {
+				html += "<td>" + list[i].manufacturer + "</td>";
 				html += "<td>" + list[i].expectedDate + "</td>";
 				html += "<td>" + list[i].deliveryDate + "</td>";
 			} else {
@@ -80,9 +81,49 @@ function showTransactions(list, type) {
 			.html(html);
 }
 
+function getStock() {
+	cfg = {
+		url : "../rest/transaction/getStock/?id=" + 0,
+		type : "GET",
+		success : function(r) {
+			showStock(r);
+		},
+		error : function(err) {
+		}
+	};
+	CFINAC.ajax.post(cfg);
+}
+
+function showStock(list) {
+	var html = "<h1>";
+	html += "Stock";
+	html += "</h1>"
+	html += "<table class='table table-striped'>"
+	html += "<tr>";
+	html += "<th>Product Model</th>";
+	html += "<th>Quantity</th>";
+	html += "</tr>"
+	if (list.length == 0) {
+		html += "<tr>";
+		html += "<td colspan='2' style='text-align:center'>Nothing stocked!!!</td>";
+		html += "</tr>";
+	} else {
+		for (i = 0; i < list.length; i++) {
+			html += "<tr>";
+			html += "<td>" + list[i].model + "</td>";
+			html += "<td>" + list[i].quantity + "</td>";
+		}
+		html += "</tr>";
+	}
+	html += "</table>";
+
+	$("#stock").html(html);
+}
+
 function update() {
 	getTransactions(0);
 	getTransactions(1);
+	getStock();
 }
 
 setInterval(update, 1000);

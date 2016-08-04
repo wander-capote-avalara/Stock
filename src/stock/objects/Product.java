@@ -15,6 +15,7 @@ public class Product implements Serializable{
 	private String model;
 	private String brand;
 	private String value;
+	private int quantity;
 	
 	public int getId() {
 		return id;
@@ -51,6 +52,12 @@ public class Product implements Serializable{
 	}
 	public void setValue(String value) {
 		this.value = value;
+	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 }

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import stock.objects.Product;
 import stock.objects.Transaction;
 
 public class JDBCTransactionDAO {
@@ -169,5 +170,41 @@ public class JDBCTransactionDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public List<Product> getStock(int id){
+		StringBuilder stbd = new StringBuilder();
+		stbd.append("SELECT p.model AS mdl, s.quantity AS qtt ");
+		stbd.append("FROM stock s ");
+		stbd.append("INNER JOIN products p ON p.id = s.products_id ");
+		if(id != 0)
+			stbd.append("WHERE p.id = ?");
 
+		PreparedStatement p;
+		ResultSet rs = null;
+		List<Product> lp = new ArrayList<Product>();
+		
+		try {
+			p = this.connection.prepareStatement(stbd.toString());
+			if(id != 0)
+				p.setInt(1, id);
+			
+			rs = p.executeQuery();
+			
+			while(rs.next()){
+				Product prod = new Product();
+				
+				prod.setModel(rs.getString("mdl"));
+				prod.setQuantity(rs.getInt("qtt"));
+				
+				lp.add(prod);
+			}
+			
+			return lp;
+					
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
 }

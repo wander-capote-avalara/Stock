@@ -45,4 +45,15 @@ public class TransactionRest extends UtilRest {
 			return this.buildErrorResponse("Error!");
 		}
 	}
+	
+	@GET
+	@Path("/getStock")
+	@Produces("text/plain")
+	public Response getStock(@QueryParam("id") int id) {
+		try {
+			return this.buildResponse(ts.getStock(id));
+		} catch (Exception e) {
+			return this.buildErrorResponse("Error!");
+		}
+	}
 }

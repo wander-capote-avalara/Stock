@@ -5,6 +5,7 @@ import java.util.List;
 
 import stock.JDBC.JDBCTransactionDAO;
 import stock.bd.connection.ConnectionStock;
+import stock.objects.Product;
 import stock.objects.Transaction;
 
 public class TransactionService {
@@ -24,5 +25,14 @@ public class TransactionService {
 		List<Transaction> lt = JDBCTDAO.getTransactions(isEntry);
 		conec.closeConnection();
 		return lt;
+	}
+	
+	public List<Product> getStock(int id) {
+		ConnectionStock conec = new ConnectionStock();
+		Connection connection = conec.openConnection();
+		JDBCTransactionDAO JDBCTDAO = new JDBCTransactionDAO(connection);
+		List<Product> lp = JDBCTDAO.getStock(id);
+		conec.closeConnection();
+		return lp;
 	}
 }

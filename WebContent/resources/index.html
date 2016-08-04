@@ -47,63 +47,67 @@
 				<!-- <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle
 					Menu</a> -->
 				<div class="row">
-					<div class="col-lg-6 col-md-6">
-						<h1>Transfucsactions</h1>
-						<form id="transactionForm">
-							<div class="form-group">
-								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-									Product: <select id="products">
-										<option value="1">prod 1</option>
-										<option value="2">prod 2</option>
-										<option value="3">prod 3</option>
-									</select>
+					<div class="col-lg-12 col-md-12">
+						<div class="col-lg-6 col-md-6">
+							<h1>Transfucsactions</h1>
+							<form id="transactionForm">
+								<div class="form-group">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										Product: <select id="products">
+											<option value="1">prod 1</option>
+											<option value="2">prod 2</option>
+											<option value="3">prod 3</option>
+										</select>
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-									Manufacturer: <input type="text" id="manufacturer" required />
+								<div class="form-group">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										Manufacturer: <input type="text" id="manufacturer" required />
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-									Quantity: <input type="text" id="quantity" required />
+								<div class="form-group">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										Quantity: <input type="text" id="quantity" required />
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-									Type: <select id="type">
-										<option selected value="0">Entry</option>
-										<option value="1">Output</option>
-									</select>
+								<div class="form-group">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										Type: <select id="type">
+											<option selected value="0">Entry</option>
+											<option value="1">Output</option>
+										</select>
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-									Expected Date: <input type="text" id="expectedDate"
-										placeholder="dd/MM/yyyy" required />
+								<div class="form-group">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										Expected Date: <input type="text" id="expectedDate"
+											placeholder="dd/MM/yyyy" required />
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-									Delivery Date: <input type="text" id="deliveryDate"
-										placeholder="dd/MM/yyyy" required />
+								<div class="form-group">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										Delivery Date: <input type="text" id="deliveryDate"
+											placeholder="dd/MM/yyyy" />
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-									Output Date: <input type="text" id="outputDate" disabled
-										placeholder="dd/MM/yyyy" required />
+								<div class="form-group">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										Output Date: <input type="text" id="outputDate" disabled
+											placeholder="dd/MM/yyyy" required />
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
-									style="margin-top: 10px;">
-									<button type="reset" class="btn btn-danger buttom">Limpar</button>
-									<button type="submit" class="btn btn-success buttom" id="send">Entrar</button>
+								<div class="form-group">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+										style="margin-top: 10px;">
+										<button type="reset" class="btn btn-danger buttom">Limpar</button>
+										<button type="button" class="btn btn-success buttom"
+											onclick="add()">Entrar</button>
+									</div>
 								</div>
-							</div>
 
-						</form>
+							</form>
+						</div>
+						<div class="col-lg-6 col-md-6" id="stock"></div>
 					</div>
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
@@ -145,7 +149,7 @@
 				$("#expectedDate").removeAttr("disabled");
 				$("#manufacturer").removeAttr("disabled");
 				$("#outputDate").val("");
-				
+
 			} else {
 				$("#outputDate").removeAttr("disabled");
 				$("#deliveryDate").attr("disabled", "disabled");
@@ -157,7 +161,5 @@
 			}
 		})
 	</script>
-
 </body>
-
 </html>
