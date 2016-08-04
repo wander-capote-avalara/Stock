@@ -1,9 +1,11 @@
 package stock.rest;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -25,10 +27,20 @@ public class TransactionRest extends UtilRest {
 	@Produces("text/plain")
 	public Response addCategoria(String params) {
 		try {
-			Transaction transaction = new ObjectMapper().readValue(params,
-					Transaction.class);
+			Transaction transaction = new ObjectMapper().readValue(params, Transaction.class);
 			ts.addTransaction(transaction);
 			return this.buildResponse("Done!");
+		} catch (Exception e) {
+			return this.buildErrorResponse("Error!");
+		}
+	}
+	
+	@GET
+	@Path("/getTransactions")
+	@Produces("text/plain")
+	public Response getTransactions(@QueryParam("isEntry") int isEntry) {
+		try {
+			return this.buildResponse(ts.getTransactions(isEntry));
 		} catch (Exception e) {
 			return this.buildErrorResponse("Error!");
 		}
