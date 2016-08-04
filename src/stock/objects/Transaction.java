@@ -10,6 +10,7 @@ public class Transaction implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private int id;
+	private String productName;
 	private int productId;
 	private String manufacturer;
 	private int quantity;
@@ -65,6 +66,12 @@ public class Transaction implements Serializable{
 	}
 	public void setOutputDate(String outputDate) {
 		this.outputDate = outputDate;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
 }

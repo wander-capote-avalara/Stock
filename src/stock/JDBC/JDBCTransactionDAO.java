@@ -86,10 +86,10 @@ public class JDBCTransactionDAO {
 	
 	public List<Transaction> getTransactions(int isEntry){
 		StringBuilder stbd = new StringBuilder();
-		String queryHelper = isEntry == 0 ? "expectedDate AS eDate, deliveryDate as dDate" : "outputDate AS oDate";
-		stbd.append("SELECT productId AS prodId, manufacturer AS manufac, quantity AS qtt, ? ");
-		stbd.append("FROM transactions ");
-		stbd.append("WHERE isEntry = ?");
+		stbd.append("SELECT id AS pid, productId AS prodId, manufacturer AS manufac, quantity AS qtt, ");
+		stbd.append(isEntry == 0 ? "expectedDate AS eDate, deliveryDate as dDate" : "outputDate AS oDate");
+		stbd.append(" FROM transactions");
+		stbd.append(" WHERE isEntry = ?");
 
 		PreparedStatement p;
 		ResultSet rs = null;
@@ -97,13 +97,13 @@ public class JDBCTransactionDAO {
 		
 		try {
 			p = this.connection.prepareStatement(stbd.toString());
-			p.setString(1, queryHelper);
-			p.setInt(2, isEntry);
+			p.setInt(1, isEntry);
 			rs = p.executeQuery();
 			
 			while(rs.next()){
 				Transaction tt = new Transaction();
 				
+				tt.setId(rs.getInt("pid"));
 				tt.setProductId(rs.getInt("prodId"));
 				tt.setManufacturer(rs.getString("manufac"));
 				tt.setQuantity(rs.getInt("qtt"));
@@ -117,6 +117,10 @@ public class JDBCTransactionDAO {
 				lt.add(tt);
 			}
 			
+			for (Transaction tsct : lt) {
+				tsct.setProductName(getProductNameById(tsct.getProductId()));
+			}
+			
 			return lt;
 					
 		} catch (Exception e) {
@@ -124,6 +128,46 @@ public class JDBCTransactionDAO {
 		}
 		return null;
 		
+	}
+
+	private String getProductNameById(int productId) {
+		StringBuilder stbd = new StringBuilder();
+
+		stbd.append("SELECT model AS mdl FROM products WHERE id = ?");
+
+		PreparedStatement p;
+		ResultSet rs = null;
+
+		try {
+			p = this.connection.prepareStatement(stbd.toString());
+			p.setInt(1, productId);
+			rs = p.executeQuery();
+			while(rs.next()){
+				return rs.getString("mdl");
+			}
+					
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public void transactionArrived(int id, String date){
+		StringBuilder stbd = new StringBuilder();
+
+		stbd.append("UPDATE transactions SET deliveryDate=? WHERE id = ?");
+
+		PreparedStatement p;
+
+		try {
+			p = this.connection.prepareStatement(stbd.toString());
+			p.setString(1, date);
+			p.setInt(2, id);			
+			p.execute();
+					
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
