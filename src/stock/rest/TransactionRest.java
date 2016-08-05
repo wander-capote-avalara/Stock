@@ -31,7 +31,7 @@ public class TransactionRest extends UtilRest {
 			ts.addTransaction(transaction);
 			return this.buildResponse("Done!");
 		} catch (Exception e) {
-			return this.buildErrorResponse("Error!");
+			return this.buildErrorResponse(e.getMessage());
 		}
 	}
 	
@@ -52,6 +52,18 @@ public class TransactionRest extends UtilRest {
 	public Response getStock(@QueryParam("id") int id) {
 		try {
 			return this.buildResponse(ts.getStock(id));
+		} catch (Exception e) {
+			return this.buildErrorResponse("Error!");
+		}
+	}
+	
+	@GET
+	@Path("/transactionArrived")
+	@Produces("text/plain")
+	public Response transactionArrived(@QueryParam("id") int id) {
+		try {
+			ts.transactionArrived(id);
+			return this.buildResponse("Done!");
 		} catch (Exception e) {
 			return this.buildErrorResponse("Error!");
 		}

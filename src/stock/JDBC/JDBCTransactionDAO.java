@@ -3,7 +3,10 @@ package stock.JDBC;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import stock.objects.Product;
@@ -46,23 +49,25 @@ public class JDBCTransactionDAO {
 	private void insertIntoStock(int quantity, int productId, int isEntry) {
 		StringBuilder stbd = new StringBuilder();
 		Integer qtt = existInStock(productId);
-		stbd.append( qtt != 0 ? "UPDATE stock SET products_id = ?, quantity = ? WHERE products_id = ?" : "INSERT INTO stock (products_id, quantity) VALUES (?,?)");
-
+		stbd.append( qtt != null ? "UPDATE stock SET products_id = ?, quantity = ? WHERE products_id = ?" : "INSERT INTO stock (products_id, quantity) VALUES (?,?)");
+			
 		PreparedStatement p;
 
 		try {
 			p = this.connection.prepareStatement(stbd.toString());
-			p.setInt(1, productId);
-			p.setInt(2, isEntry == 0 ? qtt+quantity : qtt-quantity);		
-			if(qtt != 0)
-				p.setInt(3, productId);		
+			p.setInt(1, productId);		
+			if(qtt != null)
+				p.setInt(3, productId);	
+			else
+				qtt = 0;
+			p.setInt(2, isEntry == 0 ? qtt+quantity : qtt-quantity);	
 			p.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private Integer existInStock(int productId) {
+	public Integer existInStock(int productId) {
 		StringBuilder stbd = new StringBuilder();
 
 		stbd.append("SELECT quantity AS qtt FROM stock WHERE products_id = ?");
@@ -77,12 +82,12 @@ public class JDBCTransactionDAO {
 			while(rs.next()){
 				return rs.getInt("qtt");
 			}
-			return 0;
+			return null;
 					
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return null;
 	}
 	
 	public List<Transaction> getTransactions(int isEntry){
@@ -153,16 +158,17 @@ public class JDBCTransactionDAO {
 		return null;
 	}
 	
-	public void transactionArrived(int id, String date){
+	public void transactionArrived(int id){
 		StringBuilder stbd = new StringBuilder();
-
+		SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");		
+		String text = date.format(Calendar.getInstance().getTime()).replace("-", "/");
 		stbd.append("UPDATE transactions SET deliveryDate=? WHERE id = ?");
 
 		PreparedStatement p;
 
 		try {
 			p = this.connection.prepareStatement(stbd.toString());
-			p.setString(1, date);
+			p.setString(1, text);
 			p.setInt(2, id);			
 			p.execute();
 					
@@ -177,7 +183,8 @@ public class JDBCTransactionDAO {
 		stbd.append("FROM stock s ");
 		stbd.append("INNER JOIN products p ON p.id = s.products_id ");
 		if(id != 0)
-			stbd.append("WHERE p.id = ?");
+			stbd.append("WHERE p.id = ? ");
+		stbd.append("ORDER BY s.quantity ASC");
 
 		PreparedStatement p;
 		ResultSet rs = null;

@@ -1,3 +1,4 @@
+
 var add = function() {
 	var transaction = {};
 
@@ -20,7 +21,7 @@ var add = function() {
 			update();
 		},
 		error : function(err) {
-			alert("wtf");
+			alert(err.responseText);
 			update();
 		}
 	};
@@ -68,7 +69,13 @@ function showTransactions(list, type) {
 			if (type == 0) {
 				html += "<td>" + list[i].manufacturer + "</td>";
 				html += "<td>" + list[i].expectedDate + "</td>";
-				html += "<td>" + list[i].deliveryDate + "</td>";
+				html += "<td>";
+				if (list[i].deliveryDate == "" || list[i].deliveryDate == null)
+					html += "<button style='width:100%' type='button' class='btn btn-primary btn-xs buttom' onclick='arrived("
+							+ list[i].id + ")'>Arrived</button>";
+				else
+					html += list[i].deliveryDate;
+				html += "</td>";
 			} else {
 				html += "<td>" + list[i].outputDate + "</td>";
 			}
@@ -79,6 +86,21 @@ function showTransactions(list, type) {
 
 	type == 0 ? $("#transactionEntry").html(html) : $("#transactionOutput")
 			.html(html);
+}
+
+function arrived(id) {
+	cfg = {
+		url : "../rest/transaction/transactionArrived/?id=" + id,
+		type : "GET",
+		success : function(r) {
+			alert(r);
+			update();
+		},
+		error : function(err) {
+			err.responseText;
+		}
+	};
+	CFINAC.ajax.post(cfg);
 }
 
 function getStock() {
