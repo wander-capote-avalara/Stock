@@ -15,6 +15,8 @@ public class TransactionService {
 		ConnectionStock conec = new ConnectionStock();
 		Connection connection = conec.openConnection();
 		JDBCTransactionDAO JDBCTDAO = new JDBCTransactionDAO(connection);
+		if(JDBCTDAO.checkTransaction(tst) && tst.getIsEntry() == 0)
+			throw new Exception("Same request is already done!");
 		int inStock = JDBCTDAO.existInStock(tst.getProductId()) == null ? 0 : JDBCTDAO.existInStock(tst.getProductId());
 		if (tst.getIsEntry() == 0 && inStock >= 10)
 			throw new Exception("There's more than 10 units in stock! In stock: "+inStock);

@@ -214,4 +214,33 @@ public class JDBCTransactionDAO {
 		return null;
 		
 	}
+
+	public boolean checkTransaction(Transaction tst) {
+		StringBuilder stbd = new StringBuilder();
+		stbd.append("SELECT id AS tId ");
+		stbd.append("FROM transactions ");
+		stbd.append("WHERE productId = ? AND manufacturer = ? ");
+		stbd.append("AND isEntry = ? AND deliveryDate = ''");
+
+
+		PreparedStatement p;
+		ResultSet rs = null;
+		List<Product> lp = new ArrayList<Product>();
+		
+		try {
+			p = this.connection.prepareStatement(stbd.toString());
+			p.setInt(1, tst.getProductId());	
+			p.setString(2, tst.getManufacturer());
+			p.setInt(3, tst.getIsEntry());
+			rs = p.executeQuery();
+			
+			while(rs.next()){
+				return true;
+			}
+					
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }
