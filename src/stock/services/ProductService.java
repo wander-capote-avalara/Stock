@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.util.List;
 
 import stock.JDBC.JDBCProductDAO;
-import stock.JDBC.JDBCTransactionDAO;
 import stock.bd.connection.ConnectionStock;
 import stock.objects.Product;
 

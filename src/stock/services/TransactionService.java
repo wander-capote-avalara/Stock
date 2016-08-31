@@ -2,8 +2,6 @@ package stock.services;
 
 import java.sql.Connection;
 import java.util.List;
-import java.util.Optional;
-
 import stock.JDBC.JDBCTransactionDAO;
 import stock.bd.connection.ConnectionStock;
 import stock.objects.Product;
