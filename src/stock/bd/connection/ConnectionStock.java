@@ -10,7 +10,7 @@ public class ConnectionStock {
 		try {
 			Class.forName("org.gjt.mm.mysql.Driver");
 			connectionStock = java.sql.DriverManager
-					.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "root");
+					.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
